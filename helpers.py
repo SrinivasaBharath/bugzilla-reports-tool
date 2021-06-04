@@ -1,9 +1,9 @@
 from __future__ import division, print_function
+
 import copy
 import smtplib
 import ssl
 from config import *
-
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -292,13 +292,15 @@ def report_on_qa_blockers():
 def get_needinfos_bugs():
     all_team_members = all_members()
     all_team_members = ",".join(all_team_members)
+    STATUS = ['NEW','ASSIGNED','POST','ON_QA','MODIFIED']
     query = {
-        "bug_status" : "",
+        "bug_status" : STATUS,
         "classification" : "Red Hat",
         "f1" : "requestees.login_name",
         "f2" : "flagtypes.name",
         "include_fields" : [
             "id",
+            "component",
             "keywords",
             "flags",
             "summary",
@@ -311,17 +313,22 @@ def get_needinfos_bugs():
             "whiteboard",
             "changeddate",
             "severity",
-            "target_milestone"
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time"
         ],
         "o1" : "anywordssubstr",
         "o2" : "substring",
         "product" : BUGZILLA_PRODUCT,
         "query_format" : "advanced",
         "v1" : all_team_members,
-        "v2" : "needinfo"
+        "v2" : "needinfo",
+        "version" : ["5.0","4.1","4.2"]
     }
     bugs = bzapi.query(query)
-    return filter_only_bugs(bugs)
+    return bugs
+    #return filter_only_bugs(bugs)
 
 
 def sort_target_release(bugs):
@@ -1068,3 +1075,34 @@ def get_gss_closed_loop(flag, status=""):
 
     bugs = bzapi.query(query)
     return filter_only_bugs(bugs)
+
+
+def get_info():
+    
+    REPORTER= ['racpatel','skanta','pdhiran','amk','hmunjulu','rgowdege','mmurthy'
+            ,'vashastr','pnataraj','sunnagar','mkasturi','hyelloji','ukurundw'
+            ,'julpark','gpatta','vpoliset','vimishra','ymane','amsyedha',
+            'mgowri','tchandra','sangadi','rpratap','nchilaka',
+            'psathyan']
+    
+    STATUS = ['NEW','ASSIGNED','POST','ON_QA','MODIFIED']
+    # productName = "Red Hat Ceph Storage"
+    # query =bzapi.build_query(
+    #      product=BUGZILLA_PRODUCT,
+    #      flag=["needinfo?"],
+    #      reporter=REPORTER,
+    #      status=STATUS,
+    #      #version=["5.0","4.1","4.2"]
+    #     )
+    
+    query =  {
+            "product": BUGZILLA_PRODUCT,
+            "bug_status": STATUS,
+            #"flag": ["needinfo?"],
+            'value0-0-0': 'needinfo?',
+            "reporter": REPORTER
+          
+      }
+    bugs = bzapi.query(query)
+    print("Length of the BUGS is :::::::::::::::::::::::::::::::::::::::::::::",len(bugs))
+    return bugs

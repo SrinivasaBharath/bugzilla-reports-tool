@@ -11,6 +11,7 @@ if len(sys.argv) != 2:
     raise IndexError("You must provide the spreadsheet name to work with")
 
 SPREADSHEET_NAME = sys.argv[1]
+print ("The spread sheet name is :::",SPREADSHEET_NAME)
 with open(cfg_path, 'r') as ymlfile:
     cfg = yaml.full_load(ymlfile)
     USER = cfg['bugzilla']['user']
@@ -48,9 +49,7 @@ severity = {
 }
 
 BUGS_BY_TEAM = {
-    team1: [],
-    team2: [],
-    team3: [],
+    team1: []
 }
 
 team_members_g = gapi.GoogleSpreadSheetAPI(SPREADSHEET_NAME, "QE_team_member")
@@ -67,18 +66,12 @@ while True:
 # [CHANGE NEEDED] Add the team members divided into teams. For example:
 teams = {
     team1: [
-        "ebenahar", "belimele", "ebondare", "hnallurv", "jijoy", "nberry",
-        "pbyregow", "prsurve", "sshreeka", "sagrawal", "tdesala",
-        "fbalak", "mbukatov", "apolak", "srozen",
+            'racpatel','skanta','pdhiran','hmunjulu','rgowdege','mmurthy'
+            ,'vashastr','pnataraj','sunnagar','mkasturi','hyelloji','ukurundw'
+            ,'julpark','gpatta','psathyan','vimishra','ymane','amsyedha',
+            'mgowri','tchandra','sangadi','vivk','ckulal','amk','anrao','tmathew'
     ],
-    team2: [
-        "tmuthami", "kramdoss", "akrai", "ksandha", "rperiyas", "sraghave",
-        "tunguyen", "wusui", "alayani", "savetisy"
-    ],
-    team3: [
-        "pbalogh", "clacroix", "dahorak", "shmohan", "vavuthu",
-        "ratamir", "vakulkar"
-    ],
+   
 }
 
 # [CHANGE NEEDED] Add *ALL* the product components exist in Bugzilla for your
@@ -101,8 +94,11 @@ COMPONENTS = {
 }
 
 backlog = {}
+API_KEY = "X0o6GRW8hBoKj4JHkk6JHCDbBMOeFXO2cpQMZqHf"
 URL = "bugzilla.redhat.com"
-bzapi = bugzilla.Bugzilla(URL, user=USER, password=PASSWORD)
+
+#bzapi = bugzilla.Bugzilla(URL, user=USER, password=PASSWORD)
+bzapi = bugzilla.Bugzilla(URL,API_KEY)
 
 # Bug statuses
 VERIFIED = "VERIFIED"

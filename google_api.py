@@ -8,6 +8,7 @@ In order to create a new spreadsheet, share the spreadsheet with the
 import os
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import time
 
 
 class GoogleSpreadSheetAPI(object):
@@ -54,3 +55,19 @@ class GoogleSpreadSheetAPI(object):
                 self.update_sheet(row, column + 9, "")
             else:
                 break
+    def needInfo_clean_rows(self, column, initial_row, end_row):
+        for row in range(initial_row, end_row + 1):
+            if self.get_cell_value(row, column):
+                self.update_sheet(row, column, "")
+                self.update_sheet(row, column + 1, "")
+                self.update_sheet(row, column + 2, "")
+                self.update_sheet(row, column + 3, "")
+                self.update_sheet(row, column + 4, "")
+                self.update_sheet(row, column + 5, "")
+                self.update_sheet(row, column + 6, "")
+                self.update_sheet(row, column + 7, "")
+                self.update_sheet(row, column + 8, "")
+                time.sleep(10)
+            else:
+                break
+        

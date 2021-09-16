@@ -52,32 +52,33 @@ class needInfoCls():
             print(bug.bug_id)
             row = 5 + idx
             column = 2
-            g.update_sheet(
-                row,
-                column,
-                (
-                    f'=HYPERLINK("https://bugzilla.redhat.com/show_bug'
-                    f'.cgi?id={bug.bug_id}", "{bug.bug_id}")'
+            # g.update_sheet(
+            #     row,
+            #     column,
+            #     (
+            #         f'=HYPERLINK("https://bugzilla.redhat.com/show_bug'
+            #         f'.cgi?id={bug.bug_id}", "{bug.bug_id}")'
                     
-                    )
-                )
-            g.update_sheet(row, column+1, bug.summary)
-            g.update_sheet(row, column+2, bug.status)
-            g.update_sheet(row, column+3, bug.component)
-            g.update_sheet(row, column+4, bug.severity)
-            g.update_sheet(row, column+5, requestee_name)
-            g.update_sheet(row, column+6, bug.version)
+            #         )
+            #     )
+            # g.update_sheet(row, column+1, bug.summary)
+            # g.update_sheet(row, column+2, bug.status)
+            # g.update_sheet(row, column+3, bug.component)
+            # g.update_sheet(row, column+4, bug.severity)
+            # g.update_sheet(row, column+5, requestee_name)
+            # g.update_sheet(row, column+6, bug.version)
             
             target_list=[*bug.target_release]
             target=target.join(target_list)
-            g.update_sheet(row, column+7, *bug.target_release)
-            needInfo_time=str((bug.flags)[0]['creation_date'])
-            
+            # g.update_sheet(row, column+7, *bug.target_release)
+            #needInfo_time=str((bug.flags)[0]['creation_date'])
+            needInfo_time=str(commonFunctions.get_needInfo_creation_date(bug.flags))
+            print("The new Needinfo is ::",needInfo_time)
             converted = datetime.datetime.strptime(
                 needInfo_time, "%Y%m%dT%H:%M:%S")
             age=(now - converted).days
-            g.update_sheet(row, column+8, (now - converted).days)
-            time.sleep(10)
+            # g.update_sheet(row, column+8, (now - converted).days)
+            # time.sleep(10)
             an_item = dict(bug_id=bug.bug_id,summary=bug.summary, status=bug.status,
                    component=bug.component,severity=bug.severity,
                    requestee_name=requestee_name,version=bug.version,
@@ -89,7 +90,7 @@ class needInfoCls():
                                     loader=FileSystemLoader(template_dir),
             autoescape=select_autoescape(["html", "xml"]),
             )
-        template = jinja_env.get_template("email.html")
+        template = jinja_env.get_template("need_info.html")
         html = template.render(items=items)
             
         return html

@@ -292,7 +292,7 @@ def report_on_qa_blockers():
 def get_needinfos_bugs():
     all_team_members = all_members()
     all_team_members = ",".join(all_team_members)
-    STATUS = ['NEW','ASSIGNED','POST','ON_QA','MODIFIED']
+    STATUS = ['NEW','ASSIGNED','POST','ON_QA','MODIFIED','VERIFIED']
     query = {
         "bug_status" : STATUS,
         "classification" : "Red Hat",
@@ -320,16 +320,49 @@ def get_needinfos_bugs():
         ],
         "o1" : "anywordssubstr",
         "o2" : "substring",
-        "product" : BUGZILLA_PRODUCT,
+        #"product" : BUGZILLA_PRODUCT,
         "query_format" : "advanced",
         "v1" : all_team_members,
-        "v2" : "needinfo",
-        "version" : ["5.0","4.1","4.2"]
+        "v2" : "needinfo"
+       # "version" : ["5.0","4.1","4.2"]
     }
     bugs = bzapi.query(query)
     return bugs
     #return filter_only_bugs(bugs)
 
+
+def get_OnQa_doc_bugs():
+    print("The Bugzilla version is :::",BUGZILLA_PRODUCT)
+    query = {
+        "bug_status": "ON_QA",
+        "classification" : "Red Hat",
+        "product" : BUGZILLA_PRODUCT,
+        "component" : COMPONENT_DOCUMENTATION,
+        "include_fields" : [
+            "id",
+            "component",
+            "keywords",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time"
+            
+        ],
+    }
+    bugs = bzapi.query(query)
+    #bugs = filter_by_status(bugs, ON_QA)
+    return bugs
 
 def sort_target_release(bugs):
     target_release = {}
@@ -357,7 +390,8 @@ def filter_only_bugs(bug_list):
 
 def get_new_arrivals(version=VERSION, changed_from='-1w', changed_to="Now"):
     query = {
-        "action": "wrap",
+        #"action": "wrap",
+        "product": BUGZILLA_PRODUCT,
         "chfield" : "[Bug creation]",
         "chfieldfrom" : changed_from,
         "chfieldto" : changed_to,
@@ -369,13 +403,88 @@ def get_new_arrivals(version=VERSION, changed_from='-1w', changed_to="Now"):
         "query_format": "advanced",
         "target_milestone": "---",
         "classification": "Red Hat",
-        "product": BUGZILLA_PRODUCT,
         "v7": "documentation",
         "version": version
     }
     bugs = bzapi.query(query)
     return filter_only_bugs(bugs)
 
+def get_ceph_new_arrivals(version=VERSION, changed_from='-1w', changed_to="Now"):
+    
+    query = {
+        "action": "wrap",
+        "product": BUGZILLA_PRODUCT,
+        "chfield" : "[Bug creation]",
+        "chfieldfrom" : changed_from,
+        "chfieldto" : changed_to,
+        "f1": "creation_ts",
+        "include_fields" : [
+            "id",
+            "component",
+            "keywords",
+            "creator",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time"
+        ],
+        "o1" : "greaterthan",
+        
+        
+    }
+    bugs = bzapi.query(query)
+    return(bugs)
+
+def get_ceph_Doc_new_arrivals(version=VERSION, changed_from='-1w', changed_to="Now"):
+    
+    query = {
+        "action": "wrap",
+        "product": BUGZILLA_PRODUCT,
+        "chfield" : "[Bug creation]",
+        "component" : COMPONENT_DOCUMENTATION,
+        "chfieldfrom" : changed_from,
+        "chfieldto" : changed_to,
+        "f1": "creation_ts",
+        "include_fields" : [
+            "id",
+            "component",
+            "keywords",
+            "creator",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time"
+        ],
+        "o1" : "greaterthan",
+        
+        
+    }
+    bugs = bzapi.query(query)
+    return(bugs)
+
+    
 
 def get_blocker_arrivals(version=VERSION, changed_from='-1w', changed_to="Now"):
     query = {
@@ -593,6 +702,7 @@ def get_untriaged_bugs(version_flag):
 
 
 def get_doc_bugs():
+    
     query = {
         "bug_status": "NEW,ASSIGNED,POST,MODIFIED,ON_DEV",
         "f3": "OP",
@@ -1086,14 +1196,6 @@ def get_info():
             'psathyan']
     
     STATUS = ['NEW','ASSIGNED','POST','ON_QA','MODIFIED']
-    # productName = "Red Hat Ceph Storage"
-    # query =bzapi.build_query(
-    #      product=BUGZILLA_PRODUCT,
-    #      flag=["needinfo?"],
-    #      reporter=REPORTER,
-    #      status=STATUS,
-    #      #version=["5.0","4.1","4.2"]
-    #     )
     
     query =  {
             "product": BUGZILLA_PRODUCT,
@@ -1104,5 +1206,127 @@ def get_info():
           
       }
     bugs = bzapi.query(query)
-    print("Length of the BUGS is :::::::::::::::::::::::::::::::::::::::::::::",len(bugs))
+    return bugs
+
+def get_onAck_bugs():
+    STATUS = ['POST','MODIFIED']
+    query = { 
+        "bug_status": STATUS,
+        "f10": "keywords",
+        "f3": "OP",
+        "f6": "CP",
+        "f8": "flagtypes.name",  
+        "o10": "notsubstring",
+        "o8": "anywordssubstr",
+        "product": BUGZILLA_PRODUCT,
+        "query_format": "advanced",
+        "v10": "nodocsqereview",
+        "v8": "qa_ack?",
+        "include_fields": [
+            "id",
+            "summary",
+            "target_release",
+            "qa_contact",
+            "status",
+            "component",
+            "severity",
+            "version"
+        ]
+    }
+    bugs = bzapi.query(query)
+    return bugs
+def get_ceph_OnQA_table():
+
+    query = {
+        "bug_status": ON_QA,
+        "f8": "flagtypes.name",
+        "classification": "Red Hat",
+        "product": BUGZILLA_PRODUCT,
+        "f1": "cf_qa_whiteboard",
+        "o1": "notsubstring",
+        "v1": "qa_verification=no",
+        
+        
+        "x_axis_field" : "target_release",
+        "y_axis_field": "component",
+        "query_format": "report-table",
+        "format": "table"
+        }
+    bugs = bzapi.query(query)
+   
+    return bugs
+
+def get_ceph_OnQaName_table(member_name):
+
+    query = {
+        "bug_status": ON_QA,
+        "f8": "flagtypes.name",
+        "classification": "Red Hat",
+        "product": BUGZILLA_PRODUCT,
+        "f1": "cf_qa_whiteboard",
+        "o1": "notsubstring",
+        "v1": "qa_verification=no",
+        "v2": f"{member_name}@redhat.com",
+        "include_fields": [
+            "id",
+            "status",
+            "severity"
+        ]
+ 
+        }
+    bugs = bzapi.query(query)
+    print(bugs)
+    print("The lenght of bus is",len(bugs))    
+   
+def get_ceph_bugs_per_member(member_name):
+    
+    query = {
+        "bug_status": ON_QA,
+        "classification": "Red Hat",
+        "product": BUGZILLA_PRODUCT,
+        "f1": "cf_qa_whiteboard",
+        "o1": "notsubstring",
+        "v1": "qa_verification=no",
+        "emailqa_contact1": "1",
+        "emailtype1": "substring",
+        "f2": "qa_contact",
+        "include_fields": [
+            "id",
+            "status",
+            "severity",
+            "target_release"
+        ],
+         "o2": "equals",
+        # "query_format": "advanced",
+        "v2": f"{member_name}@redhat.com",
+        # "f7": "flagtypes.name",
+        # "o7": "substring"
+        
+        
+    }
+    bugs = bzapi.query(query)
+    return bugs
+
+def get_unspec_sev_bugs():
+    STATUS = ['__open__']
+    query = { 
+        "bug_status": STATUS,
+        "product": BUGZILLA_PRODUCT,
+        "f1": "component",
+        "bug_severity": "unspecified",
+        "o1": "notsubstring",
+        "query_format": "advanced",
+        "include_fields": [
+            "id",
+            "summary",
+            "target_release",
+            "qa_contact",
+            "status",
+            "component",
+            "severity",
+            "version",
+            "creator"
+        ]
+    }
+    bugs = bzapi.query(query)
     return bugs

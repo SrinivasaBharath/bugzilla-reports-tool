@@ -23,18 +23,16 @@
 	
 <body>
 
-<h2>Last 24 hrs Reported bugs</h2>
+<h2><a href="https://bugzilla.redhat.com/buglist.cgi?bug_status=POST&bug_status=MODIFIED&columnlist=product%2Ccomponent%2Cassigned_to%2Cbug_status%2Ctarget_release%2Cshort_desc%2Cqa_contact_realname%2Ccf_regression_status%2Cbug_severity%2Cversion%2Creporter_realname%2Ccf_pm_score%2Cflagtypes.name%2Cchangeddate%2Cflags_all%2Ctarget_milestone&f10=keywords&f3=OP&f6=CP&f8=flagtypes.name&known_name=CEPH_QA_ACK%3F&list_id=12126244&o10=notsubstring&o8=anywordssubstr&product=Red%20Hat%20Ceph%20Storage&query_based_on=CEPH_QA_ACK%3F&query_format=advanced&v10=nodocsqereview&v8=qa_ack%3F"> QA_Ack? review pending</a></h2>
 <table class="full-table">
 	<tr>
             <th style="color: blue">#Bug ID</th>
             <th style="color: blue">Summary</th>
-            <th style="color: blue">Reporter</th>
-            <th style="color: blue">Status</th>
+            <th style="color: blue">QA Contact</th>
             <th style="color: blue">Component</th>
+            <th style="color: blue">Target Release</th>
+            <th style="color: blue">Status</th>
 		    <th style="color: blue">Severity</th>
-		    <th style="color: blue">Is Blocker?</th>
-		    <th style="color: blue">Version</th>
-		    <th style="color: blue">Target Release</th>
         </tr>
 	
 	   {% for item in items %}
@@ -42,25 +40,12 @@
         
            <TD><a href="https://bugzilla.redhat.com/show_bug.cgi?id={{item.bug_id}}">{{item.bug_id}}</a></TD>
            <TD>{{item.summary}}</TD>
-           <TD>{{item.reporter}}</TD>
-           <TD>{{item.status}}</TD>
+           <TD>{{item.qaContact}}</TD>
            <TD>{{item.component}}</TD>
-           <TD>{{item.severity}}</TD>
-           
-           {% if item.is_Blocker == "+" %}
-              <TD style ="background-color: #00FF7F">{{item.is_Blocker}}</TD>
-           {% elif item.is_Blocker == "?"  %}
-              <TD style ="background-color: #deea94">{{item.is_Blocker}}</TD>
-           {% elif item.is_Blocker == "-"  %}
-              <TD style ="background-color: #ff7f8a">{{item.is_Blocker}}</TD>      
-           {% else %}
-              <TD >{{item.is_Blocker}}</TD>
-           {% endif %}    
-        
-        
-           <TD>{{item.version}}</TD>
            <TD>{{item.target_release}}</TD>
-                 
+           <TD>{{item.status}}</TD>
+           <TD>{{item.severity}}</TD>
+         
         </TR>
         {% endfor %}	
 </table>	

@@ -23,18 +23,16 @@
 	
 <body>
 
-<h2>Last 24 hrs Reported bugs</h2>
+<h2><a href="https://bugzilla.redhat.com/buglist.cgi?bug_severity=unspecified&bug_status=__open__&f1=component&known_name=CEPH%20UnSpecified%20Severity&list_id=12126326&o1=notsubstring&product=Red%20Hat%20Ceph%20Storage&query_based_on=CEPH%20UnSpecified%20Severity&query_format=advanced">Unspecified severity bug list</a></h2>
 <table class="full-table">
 	<tr>
             <th style="color: blue">#Bug ID</th>
             <th style="color: blue">Summary</th>
             <th style="color: blue">Reporter</th>
-            <th style="color: blue">Status</th>
+            <th style="color: blue">QA Contact</th>
             <th style="color: blue">Component</th>
-		    <th style="color: blue">Severity</th>
-		    <th style="color: blue">Is Blocker?</th>
-		    <th style="color: blue">Version</th>
-		    <th style="color: blue">Target Release</th>
+            <th style="color: blue">Target Release</th>
+		    
         </tr>
 	
 	   {% for item in items %}
@@ -43,24 +41,10 @@
            <TD><a href="https://bugzilla.redhat.com/show_bug.cgi?id={{item.bug_id}}">{{item.bug_id}}</a></TD>
            <TD>{{item.summary}}</TD>
            <TD>{{item.reporter}}</TD>
-           <TD>{{item.status}}</TD>
+           <TD>{{item.qaContact}}</TD>
            <TD>{{item.component}}</TD>
-           <TD>{{item.severity}}</TD>
-           
-           {% if item.is_Blocker == "+" %}
-              <TD style ="background-color: #00FF7F">{{item.is_Blocker}}</TD>
-           {% elif item.is_Blocker == "?"  %}
-              <TD style ="background-color: #deea94">{{item.is_Blocker}}</TD>
-           {% elif item.is_Blocker == "-"  %}
-              <TD style ="background-color: #ff7f8a">{{item.is_Blocker}}</TD>      
-           {% else %}
-              <TD >{{item.is_Blocker}}</TD>
-           {% endif %}    
-        
-        
-           <TD>{{item.version}}</TD>
            <TD>{{item.target_release}}</TD>
-                 
+           
         </TR>
         {% endfor %}	
 </table>	

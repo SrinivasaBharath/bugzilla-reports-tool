@@ -446,16 +446,18 @@ def get_ceph_new_arrivals(version=VERSION, changed_from='-1w', changed_to="Now")
     bugs = bzapi.query(query)
     return(bugs)
 
-def get_ceph_Doc_new_arrivals(version=VERSION, changed_from='-1w', changed_to="Now"):
-    
+def get_ceph_Doc_new_arrivals(changed_from='-1w', changed_to="Now"):
+    #print("The version is ::",version)
     query = {
-        "action": "wrap",
-        "product": BUGZILLA_PRODUCT,
-        "chfield" : "[Bug creation]",
-        "component" : COMPONENT_DOCUMENTATION,
+        #"action": "wrap",
+        "bug_status": "NEW",
         "chfieldfrom" : changed_from,
         "chfieldto" : changed_to,
-        "f1": "creation_ts",
+        "classification": "Red Hat",
+        "component" : COMPONENT_DOCUMENTATION,
+        "product": "Red Hat Ceph Storage",
+        "query_format" : "advanced",
+       
         "include_fields" : [
             "id",
             "component",
@@ -476,10 +478,7 @@ def get_ceph_Doc_new_arrivals(version=VERSION, changed_from='-1w', changed_to="N
             "version",
             "target_release",
             "last_change_time"
-        ],
-        "o1" : "greaterthan",
-        
-        
+        ], 
     }
     bugs = bzapi.query(query)
     return(bugs)
@@ -1189,11 +1188,11 @@ def get_gss_closed_loop(flag, status=""):
 
 def get_info():
     
-    REPORTER= ['racpatel','skanta','pdhiran','amk','hmunjulu','rgowdege','mmurthy'
+    REPORTER= ['racpatel','skanta','pdhiran','amk','mmurthy'
             ,'vashastr','pnataraj','sunnagar','mkasturi','hyelloji','ukurundw'
             ,'julpark','gpatta','vpoliset','vimishra','ymane','amsyedha',
-            'mgowri','tchandra','sangadi','rpratap','nchilaka',
-            'psathyan']
+            'mgowri','tchandra','sangadi','rpratap','nchilaka','ngangadh','adrajiv',
+            'psathyan','anssingh','hmaheswa','hchebrol','shucjain','rlepaksh','radesai']
     
     STATUS = ['NEW','ASSIGNED','POST','ON_QA','MODIFIED']
     

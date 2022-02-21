@@ -66,11 +66,14 @@ while True:
 # [CHANGE NEEDED] Add the team members divided into teams. For example:
 teams = {
     team1: [
-            'racpatel','skanta','pdhiran','hmunjulu','rgowdege','mmurthy'
-            ,'vashastr','pnataraj','sunnagar','mkasturi','hyelloji','ukurundw'
-            ,'julpark','gpatta','psathyan','vimishra','ymane','amsyedha',
-            'mgowri','tchandra','sangadi','vivk','ckulal','amk','anrao','tmathew'
-    ],
+            'racpatel@','skanta@','pdhiran@','mmurthy@'
+            ,'vashastr@','pnataraj@','sunnagar@','mkasturi@','hyelloji@',
+            'ukurundw@','julpark@','gpatta@','psathyan@','vimishra@','ymane@',
+            'amsyedha@','mgowri@','tchandra@','sangadi@','vivk@','ckulal@',
+            'amk@','anrao@','tmathew@','gsitlani@','vereddy@','ngangadh@',
+            'adrajiv@','anssingh@','hmaheswa@','hchebrol@','shucjain@',
+            'rlepaksh@','radesai@'
+    ],    
    
 }
 
@@ -94,8 +97,9 @@ COMPONENTS = {
 }
 
 backlog = {}
-API_KEY = "X0o6GRW8hBoKj4JHkk6JHCDbBMOeFXO2cpQMZqHf"
+API_KEY = "WxlaaqTFVdEXmgVz4a5MkT0g3jDoqAGbMwIPYApZ"
 URL = "bugzilla.redhat.com"
+#URL = "bugzilla.stage.redhat.com"
 
 #bzapi = bugzilla.Bugzilla(URL, user=USER, password=PASSWORD)
 bzapi = bugzilla.Bugzilla(URL,API_KEY)
@@ -121,3 +125,4 @@ MISSING_ACK = [
 ]
 NEEDINFO = "needinfo?"
 QUALITY_IMPACT = "quality_impact="
+COMPONENT_DOCUMENTATION = "Documentation"

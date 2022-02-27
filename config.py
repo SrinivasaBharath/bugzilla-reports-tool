@@ -97,11 +97,8 @@ COMPONENTS = {
 }
 
 backlog = {}
-API_KEY = "WxlaaqTFVdEXmgVz4a5MkT0g3jDoqAGbMwIPYApZ"
+API_KEY = "XXXXXXXXXXXXXXXXXXXXX"
 URL = "bugzilla.redhat.com"
-#URL = "bugzilla.stage.redhat.com"
-
-#bzapi = bugzilla.Bugzilla(URL, user=USER, password=PASSWORD)
 bzapi = bugzilla.Bugzilla(URL,API_KEY)
 
 # Bug statuses

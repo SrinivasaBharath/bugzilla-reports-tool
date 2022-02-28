@@ -97,9 +97,10 @@ COMPONENTS = {
 }
 
 backlog = {}
-API_KEY = "XXXXXXXXXXXXXXXXXXXXX"
+
+# Create the API key at ~/.config/python-bugzilla/bugzillarc file
 URL = "bugzilla.redhat.com"
-bzapi = bugzilla.Bugzilla(URL,API_KEY)
+bzapi = bugzilla.Bugzilla(URL)
 
 # Bug statuses
 VERIFIED = "VERIFIED"

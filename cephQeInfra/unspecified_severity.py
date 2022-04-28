@@ -24,13 +24,10 @@ class unspecified_severity_cls():
         target=""
 
         project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        template_dir=os.path.join(project_dir, "../bugzilla-reports-tool-master/html_template")
+        template_dir=os.path.join(project_dir, "../bugzilla-reports-tool/html_template")
         bugs = get_unspec_sev_bugs()
-        print (bugs)
         if (len(bugs) != 0):
             for  idx, bug in enumerate(bugs):
-                print("The bug id is ::::::",bug.bug_id)
-                print("The bug contact is ::::::",bug.creator)
                 target_list=[*bug.target_release]
                 target=target.join(target_list)
                 an_item = dict(bug_id=bug.bug_id,summary=bug.summary,

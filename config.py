@@ -11,16 +11,6 @@ if len(sys.argv) != 2:
     raise IndexError("You must provide the spreadsheet name to work with")
 
 SPREADSHEET_NAME = sys.argv[1]
-print ("The spread sheet name is :::",SPREADSHEET_NAME)
-with open(cfg_path, 'r') as ymlfile:
-    cfg = yaml.full_load(ymlfile)
-    USER = cfg['bugzilla']['user']
-    PASSWORD = cfg['bugzilla']['password']
-
-    # For the Bugzilla reports
-    gmail_user = cfg['bugzilla_report']['gmail_address']
-    gmail_pwd = cfg['bugzilla_report']['gmail_pass']
-    mail_to = USER
 
 g = gapi.GoogleSpreadSheetAPI(SPREADSHEET_NAME, "Dashboard configuration")
 

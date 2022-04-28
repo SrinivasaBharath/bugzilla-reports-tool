@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+	#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Created on Fri Jun 25 05:24:11 2021
@@ -31,8 +31,7 @@ class DocOnQaCls():
             if(after_change == "ON_QA"):
                 onQa_date=list_change["when"]
                 
-        return(onQa_date)     
-            #print(list_change["changes"][0]["added"])
+        return(onQa_date)
              
         
         
@@ -41,8 +40,7 @@ class DocOnQaCls():
     def get_Doc_bugs(self):
         
         project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        print(project_dir)
-        template_dir=os.path.join(project_dir, "../bugzilla-reports-tool-master/html_template")
+        template_dir=os.path.join(project_dir, "../bugzilla-reports-tool/html_template")
         g = gapi.GoogleSpreadSheetAPI(SPREADSHEET_NAME,"DocBugs")
         IST = pytz.timezone('Asia/Kolkata')
         current_time = datetime.datetime.now(IST)
@@ -51,10 +49,8 @@ class DocOnQaCls():
         bugs = get_OnQa_doc_bugs()
         target=""
         items=[]
-        print("The bug count is::",len(bugs))
 
         for  idx, bug in enumerate(bugs):
-           print(bug.bug_id)
            row = 5 + idx
            column = 4
            g.update_sheet(
@@ -73,7 +69,6 @@ class DocOnQaCls():
            converted = datetime.datetime.strptime(
                 str(OnQaDateNotFormat), "%Y%m%dT%H:%M:%S")
            age=(now - converted).days
-           print("The ONQA date is :::",OnQaDateNotFormat)
            g.update_sheet(row, column+4, *bug.target_release)
            time.sleep(10)
            an_item = dict(bug_id=bug.bug_id,summary=bug.summary,

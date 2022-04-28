@@ -30,8 +30,7 @@ class needInfoCls():
     def get_NeedInfo_bugs(self):
         
         project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        print(project_dir)
-        template_dir=os.path.join(project_dir, "../bugzilla-reports-tool-master/html_template")
+        template_dir=os.path.join(project_dir, "../bugzilla-reports-tool/html_template")
         
         g = gapi.GoogleSpreadSheetAPI(SPREADSHEET_NAME, "Need Info")
         IST = pytz.timezone('Asia/Kolkata')
@@ -46,7 +45,6 @@ class needInfoCls():
         for  idx, bug in enumerate(bugs):
             
             requestee_name=commonFunctions.get_requestee_name(bug.flags)
-            print(requestee_name)
             row = 5 + idx
             column = 2
             g.update_sheet(

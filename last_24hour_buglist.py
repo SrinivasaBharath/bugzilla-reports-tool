@@ -25,15 +25,11 @@ datetime_ist = datetime.now(IST)
 start_time=datetime_ist.strftime("%d %b %Y %H:%M")
 
 project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print(project_dir)
-template_dir=os.path.join(project_dir, "bugzilla-reports-tool-master/html_template")
+template_dir=os.path.join(project_dir, "bugzilla-reports-tool/html_template")
 
 g = gapi.GoogleSpreadSheetAPI(SPREADSHEET_NAME, "New_Bugs")
 bugs=get_ceph_new_arrivals(5,"-24h")
-print("The number of bugs are ::::",len(bugs))
 for  idx, bug in enumerate(bugs):
-    print("The bug id is ::::::",bug.bug_id)
-    print("The bug creator is ::",bug.creator)
     target_list=[*bug.target_release]
     target=target.join(target_list)
     blocker_status=commonFunctions.get_blocker_status(bug.flags)
@@ -48,23 +44,40 @@ jinja_env = Environment(extensions=[MarkdownExtension],
     loader=FileSystemLoader(template_dir),
         autoescape=select_autoescape(["html", "xml"]),
     )
-template = jinja_env.get_template("last_48hrs_bugs.html")
-html = template.render(items=items)
+template = jinja_env.get_template("last_24hrs_bugs.html")
+html1 = template.render(items=items)
+
+bugs=get_rbd_rbd_mirror_bugs()
+jinja_env = Environment(extensions=[MarkdownExtension],
+    loader=FileSystemLoader(template_dir),
+        autoescape=select_autoescape(["html", "xml"]),
+    )
+template = jinja_env.get_template("rbd_red_hat_openshift_data_foundation.html")
+html2 = template.render(items=bugs)
+
+bugs=get_ceph_bugs()
+jinja_env = Environment(extensions=[MarkdownExtension],
+    loader=FileSystemLoader(template_dir),
+        autoescape=select_autoescape(["html", "xml"]),
+    )
+template = jinja_env.get_template("ceph_red_hat_openshift_data_foundation.html")
+html3 = template.render(items=bugs)
 
 
 sender = "ceph-qe-infra@redhat.com"
-#sender = "skanta@redhat.com"
-recipients = ["ceph-qe-BZ-tracker@redhat.com"]
-#recipients = ["skanta@redhat.com"]
+recipients = ["ceph-qe@redhat.com"]
 
-msg = MIMEMultipart("alternative")
+msg = MIMEMultipart("mixed")
 msg["Subject"] = "Last 24 hrs Reported bugs -Auto generated at "\
                     + start_time +"[IST]"
 msg["From"] = sender
 msg["To"] = ", ".join(recipients)
-part1 = MIMEText(html, "html")
-msg.attach(part1)
-        
+table1 = MIMEText(html1, "html")
+table2 = MIMEText(html2, "html")
+table3 = MIMEText(html3, "html")
+msg.attach(table1)
+msg.attach(table2)
+msg.attach(table3)
 
 try:
             s = smtplib.SMTP("localhost")
@@ -78,5 +91,6 @@ try:
 
 except Exception as e:
             print("\n")
-            #log.exception(e)
+            log.exception(e)
+            print(e)
 print("done")

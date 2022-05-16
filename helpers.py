@@ -25,6 +25,189 @@ BASE_QUERY = {
 }
 
 
+def get_rgw_rgwmultisite_bugs():
+    query = {
+        "bug_status" : "ON_QA",
+        "classification" : "Red Hat",
+        "f1" : "cf_qa_whiteboard",
+        "include_fields" : [
+            "id",
+            "component",
+            "keywords",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time"
+        ],
+        "product" : "Red Hat Ceph Storage ",
+        "bug_severity" : ["urgent","high","medium","low"],
+        "component" : ["RGW","RGW-Multisite"],
+        "o1" : "substring",
+        "v1": "qa_verification=yes",
+        "chfieldto" : "Now",
+        "chfieldvalue" : "qa_verification=yes"
+    }
+    bugs = bzapi.query(query)
+    return bugs
+
+
+def get_kernel_bugs():
+    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?bug_status=POST&bug_status=MODIFIED&bug_status=ON_QA&columnlist=product%2Ccomponent%2Cassigned_to%2Cbug_status%2Cresolution%2Cshort_desc%2Cflags_all%2Cqa_contact&component=kernel&known_name=RHEL_Kernel_CephFS_BZs&list_id=12505768&product=Red%20Hat%20Enterprise%20Linux%207&product=Red%20Hat%20Enterprise%20Linux%208&product=Red%20Hat%20Enterprise%20Linux%209&query_based_on=RHEL_Kernel_CephFS_BZs&query_format=advanced&rh_sub_components=File%20Systems%20CephFS")
+    query["include_fields"]= [
+            "id",
+            "component",
+            "sub_components",
+            "keywords",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time"
+        ]
+    bugs = filter_by_flag_qa_verified_tested(bzapi.query(query))
+    return bugs
+
+
+def filter_by_flag_qa_verified_tested(bugs):
+    buglist=[]
+    for bug in bugs:
+        contains_qa_verified_tested=1
+        for flag in bug.flags:
+            if flag['name']=='qa_verified_tested' and bug.status in ["MODIFIED","POST"]:
+                contains_qa_verified_tested=0
+                break
+        if contains_qa_verified_tested==1:
+            buglist.append(bug)
+    return buglist
+
+
+def get_rbd_rbd_mirror_bugs(changed_from = "-24h", changed_to = "Now"):
+    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?bug_status=__open__&classification=Red%20Hat&component=RBD&component=RBD-Mirror&f1=dependent_products&list_id=12540042&o1=anywords&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v1=Red%20Hat%20Openshift%20Data%20Foundation")
+    query["include_fields"]= [
+            "id",
+            "component",
+            "sub_components",
+            "keywords",
+            "creator",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time",
+            "dependent_products",
+            "target"
+        ]
+    query["chfieldfrom"] = changed_from
+    query["chfieldto"] = changed_to
+    query["chfield"] = "[Bug creation]"
+    bugs = filter_by_dependent_product(bzapi.query(query), "Red Hat OpenShift Data Foundation")
+    return bugs
+
+
+def filter_by_dependent_product(bugs, dp="Red Hat OpenShift Data Foundation"):
+    return [bug for bug in bugs if dp in bug.dependent_products]
+
+
+def get_ceph_bugs(changed_from = "-24h", changed_to = "Now"):
+    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?bug_status=__open__&classification=Red%20Hat&columnlist=component%2Cbug_status%2Cshort_desc%2Ccf_qa_whiteboard&component=ceph&known_name=Open%20RBD%2C%20RBD-mirror%20BZs%20from%20ODF&list_id=12571774&product=Red%20Hat%20OpenShift%20Data%20Foundation&query_based_on=Open%20RBD%2C%20RBD-mirror%20BZs%20from%20ODF&query_format=advanced&short_desc=rbd&short_desc_type=anywordssubstr")
+    query["include_fields"]= [
+            "id",
+            "component",
+            "product",
+            "sub_components",
+            "keywords",
+            "creator",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time",
+            "dependent_products",
+            "target",
+            "cf_qa_whiteboard"
+        ]
+    query["chfieldfrom"] = changed_from
+    query["chfieldto"] = changed_to
+    query["chfield"] = "[Bug creation]"
+    bugs = bzapi.query(query)
+    return bugs
+
+
+def get_action_item_rbd_rbd_mirror_bugs():
+    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?bug_status=__open__&classification=Red%20Hat&component=RBD&component=RBD-Mirror&f1=cf_qa_whiteboard&f2=dependent_products&list_id=12594635&o1=notsubstring&o2=substring&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v1=qe_triaged&v2=Red%20Hat%20Openshift%20Data%20Foundation")
+    query["include_fields"]= [
+            "id",
+            "component",
+            "sub_components",
+            "keywords",
+            "creator",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time",
+            "dependent_products",
+            "target",
+            "cf_qa_whiteboard"
+        ]
+    return bzapi.query(query)
+
+
+def filter_by_qa_whiteboard(bugs, word="qe_triaged", opt=False):
+    return [bug for bug in bugs if (word in bug.cf_qa_whiteboard) == opt]
+
+
 def send_email(gmail_user, gmail_password, recipients, subject, body):
 
     sent_from = gmail_user

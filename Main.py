@@ -16,6 +16,8 @@ from cephQeInfra import needInfo_class
 from cephQeInfra import testOnQa
 from cephQeInfra import qaAck
 from cephQeInfra import unspecified_severity
+from cephQeInfra import kernel_bugs_class
+from cephQeInfra import rbd_bugs_class
 
 
 htmlPrep_obj= htmlPrep.htmlPrep()
@@ -24,6 +26,8 @@ needInfo_Obj=needInfo_class.needInfoCls()
 testOnQa_Obj= testOnQa.TestOnQaCls()
 qaAck_Obj = qaAck.QaAckCls()
 unspec_sev_obj = unspecified_severity.unspecified_severity_cls()
+kernel_bugs_obj= kernel_bugs_class.kernelBugsCls()
+rbd_bugs_obj= rbd_bugs_class.rbdBugsCls()
 
 UTC = pytz.utc
 IST = pytz.timezone('Asia/Kolkata')
@@ -36,15 +40,12 @@ doc_OnQA_bugs=docOnQa_Obj.get_Doc_bugs()
 testOnQa_bugs=testOnQa_Obj.get_test_OnQa_bugs()
 qaAck_bugs = qaAck_Obj.get_QaAck_bugs()
 unspec_sev_bugs=unspec_sev_obj.get_unspecified_severity_bugs()
-
-
+kernel_bugs=kernel_bugs_obj.getKernelBugs()
+rbd_bugs=rbd_bugs_obj.getRbdBugs()
 
 
 sender = "ceph-qe-infra@redhat.com"
 recipients = ["ceph-qe@redhat.com"]
-
-#sender = "skanta@redhat.com"
-#recipients = ["skanta@redhat.com"]
 
 
 msg = MIMEMultipart('mixed')
@@ -58,15 +59,17 @@ table3 = MIMEText(testOnQa_bugs, "html")
 table4 = MIMEText(qaAck_bugs, "html")
 if (unspec_sev_bugs != None):
     table5 = MIMEText(unspec_sev_bugs, "html")
-
+table6= MIMEText(kernel_bugs, "html")
+table7= MIMEText(rbd_bugs, "html")
 
 msg.attach(table1)
 msg.attach(table2)
+msg.attach(table3)
 msg.attach(table4)
 if (unspec_sev_bugs != None):
     msg.attach(table5)
-msg.attach(table3)
-
+msg.attach(table6)
+msg.attach(table7)
         
 
 try:
@@ -81,4 +84,4 @@ try:
 
 except Exception as e:
             print("\n")
-            #log.exception(e)
+            log.exception(e)

@@ -21,7 +21,7 @@ class TestOnQaCls():
     
     def get_test_OnQa_bugs(self):
         project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        template_dir=os.path.join(project_dir, "../bugzilla-reports-tool-master/html_template")
+        template_dir=os.path.join(project_dir, "../bugzilla-reports-tool/html_template")
         
         all_team_members = all_members()
         all_team_members = [x[:-1] for x in all_team_members]

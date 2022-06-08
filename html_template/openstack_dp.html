@@ -9,23 +9,23 @@
         border-collapse: collapse;
         width: 100%;
     }
-    
-    
+
+
 
     td, th {
         border: 1px solid #050505;
         text-align: left;
         padding: 8px;
     }
-    
+
     p { margin:0 }
-    
+
     </style>
 </head>
-	
+
 <body>
 
-<h2><a href="https://bugzilla.redhat.com/buglist.cgi?bug_status=__open__&classification=Red%20Hat&component=RBD&component=RBD-Mirror&f1=cf_qa_whiteboard&f2=dependent_products&list_id=12640087&o1=notsubstring&o2=substring&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v1=qa_verification&v2=Red%20Hat%20Openshift%20Data%20Foundation"> RHODF Bugs to be QE Triaged</a></h2>
+<h2><a href="https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&classification=Red%20Hat&columnlist=component%2Cbug_status%2Cshort_desc%2Ccf_qa_whiteboard%2Cproduct%2Cdependent_products&f2=dependent_products&list_id=12638829&o2=substring&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v2=OpenStack"> Red Hat OpenStack Dependent Bugs </a></h2>
 <table class="full-table">
 	<tr>
             <th style="color: blue">#Bug ID</th>
@@ -35,22 +35,22 @@
 	    <th style="color: blue">QA Whiteboard</th>
 	    <th style="color: blue">Dependent Products</th>
         </tr>
-	
+
 	   {% for item in items %}
         <TR>
-        
+
            <TD><a href="https://bugzilla.redhat.com/show_bug.cgi?id={{item.bug_id}}">{{item.bug_id}}</a></TD>
            <TD>{{item.component}}</TD>
            <TD>{{item.summary}}</TD>
            <TD>{{item.status}}</TD>
-           <TD>{{item.cf_qa_whiteboard}}</TD>  
+           <TD>{{item.cf_qa_whiteboard}}</TD>
            <TD>{{item.dependent_products}}</TD>
         </TR>
-        {% endfor %}	
-</table>	
+        {% endfor %}
+</table>
 
 
 </body>
 </html>
-	
-	
+
+

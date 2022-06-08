@@ -18,6 +18,7 @@ from cephQeInfra import qaAck
 from cephQeInfra import unspecified_severity
 from cephQeInfra import kernel_bugs_class
 from cephQeInfra import rbd_bugs_class
+from cephQeInfra import openstack_dp_bugs
 
 
 htmlPrep_obj= htmlPrep.htmlPrep()
@@ -28,6 +29,7 @@ qaAck_Obj = qaAck.QaAckCls()
 unspec_sev_obj = unspecified_severity.unspecified_severity_cls()
 kernel_bugs_obj= kernel_bugs_class.kernelBugsCls()
 rbd_bugs_obj= rbd_bugs_class.rbdBugsCls()
+openstack_bugs_obj= openstack_dp_bugs.OpenstackBugsCls()
 
 UTC = pytz.utc
 IST = pytz.timezone('Asia/Kolkata')
@@ -42,6 +44,7 @@ qaAck_bugs = qaAck_Obj.get_QaAck_bugs()
 unspec_sev_bugs=unspec_sev_obj.get_unspecified_severity_bugs()
 kernel_bugs=kernel_bugs_obj.getKernelBugs()
 rbd_bugs=rbd_bugs_obj.getRbdBugs()
+openstack_bugs= openstack_bugs_obj.getOpenstackBugs()
 
 
 sender = "ceph-qe-infra@redhat.com"
@@ -61,6 +64,7 @@ if (unspec_sev_bugs != None):
     table5 = MIMEText(unspec_sev_bugs, "html")
 table6= MIMEText(kernel_bugs, "html")
 table7= MIMEText(rbd_bugs, "html")
+table8= MIMEText(openstack_bugs, "html")
 
 msg.attach(table1)
 msg.attach(table2)
@@ -70,6 +74,7 @@ if (unspec_sev_bugs != None):
     msg.attach(table5)
 msg.attach(table6)
 msg.attach(table7)
+msg.attach(table8)
         
 
 try:

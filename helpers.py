@@ -175,7 +175,36 @@ def get_ceph_bugs(changed_from = "-24h", changed_to = "Now"):
 
 
 def get_action_item_rbd_rbd_mirror_bugs():
-    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?bug_status=__open__&classification=Red%20Hat&component=RBD&component=RBD-Mirror&f1=cf_qa_whiteboard&f2=dependent_products&list_id=12594635&o1=notsubstring&o2=substring&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v1=qe_triaged&v2=Red%20Hat%20Openshift%20Data%20Foundation")
+    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?bug_status=__open__&classification=Red%20Hat&component=RBD&component=RBD-Mirror&f1=cf_qa_whiteboard&f2=dependent_products&list_id=12640087&o1=notsubstring&o2=substring&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v1=qa_verification&v2=Red%20Hat%20Openshift%20Data%20Foundation")
+    query["include_fields"]= [
+            "id",
+            "component",
+            "sub_components",
+            "keywords",
+            "creator",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time",
+            "dependent_products",
+            "target",
+            "cf_qa_whiteboard"
+        ]
+    return bzapi.query(query)
+
+def get_action_item_openstack_dp_bugs():
+    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&classification=Red%20Hat&columnlist=component%2Cbug_status%2Cshort_desc%2Ccf_qa_whiteboard%2Cproduct%2Cdependent_products&f2=dependent_products&list_id=12638829&o2=substring&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v2=OpenStack")
     query["include_fields"]= [
             "id",
             "component",

@@ -140,7 +140,7 @@ def filter_by_dependent_product(bugs, dp="Red Hat OpenShift Data Foundation"):
 
 
 def get_ceph_bugs(changed_from = "-24h", changed_to = "Now"):
-    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?bug_status=__open__&classification=Red%20Hat&columnlist=component%2Cbug_status%2Cshort_desc%2Ccf_qa_whiteboard&component=ceph&known_name=Open%20RBD%2C%20RBD-mirror%20BZs%20from%20ODF&list_id=12571774&product=Red%20Hat%20OpenShift%20Data%20Foundation&query_based_on=Open%20RBD%2C%20RBD-mirror%20BZs%20from%20ODF&query_format=advanced&short_desc=rbd&short_desc_type=anywordssubstr")
+    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?bug_status=__open__&classification=Red%20Hat&columnlist=component%2Cbug_status%2Cshort_desc%2Ccf_qa_whiteboard&component=ceph&known_name=Open%20RBD%2C%20RBD-mirror%20BZs%20from%20ODF&list_id=12733243&product=Red%20Hat%20OpenShift%20Data%20Foundation&query_based_on=Open%20RBD%2C%20RBD-mirror%20BZs%20from%20ODF&query_format=advanced&rh_sub_components=RBD&rh_sub_components=RBD-Mirror")
     query["include_fields"]= [
             "id",
             "component",

@@ -61,8 +61,9 @@ teams = {
             'ukurundw@','julpark@','gpatta@','psathyan@','vimishra@','ymane@',
             'amsyedha@','mgowri@','tchandra@','sangadi@','vivk@','ckulal@',
             'amk@','anrao@','tmathew@','gsitlani@','vereddy@','ngangadh@',
-            'adrajiv@','anssingh@','hmaheswa@','hchebrol@','shucjain@',
-            'rlepaksh@','radesai@'
+            'hmaheswa@','hchebrol@', 'rlepaksh@', 'saraut@', 'hkumar@', 'vdas@',
+            'vamahaja@', 'aramteke@', 'vpapnoi@', 'msaini@', 'giridhar.ramaraju@',
+            'mobisht@', 'fkellehe@', 'prprakas@', 'rkhambad@', 'yweinste@',
     ],    
    
 }

@@ -1,0 +1,50 @@
+-<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+    table.full-table{
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #050505;
+        text-align: left;
+        padding: 8px;
+    }
+    
+    p { margin:0 }
+
+    table, th, td {
+       border: 1px solid white;
+       border-collapse: collapse;
+       }
+       th, td {
+          background-color: #F9EDED;
+          }
+    caption {
+       font-size: 150%;
+       font-weight: bold;
+}
+    
+    </style>
+</head>
+	
+<body>
+
+<table style="width:500px">
+   <caption><b>Customer Experience Weekly Status</b></caption>
+   {% for key, value in items_count.items() %}
+   <tr>
+      <td> {{ key }} </td>
+      <td><a href="{{value[1]}}">{{value[0]}}</a></td>
+   </tr>
+   {% endfor %}
+</table>	
+
+<br>
+<br>
+<br>

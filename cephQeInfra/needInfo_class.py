@@ -75,7 +75,7 @@ class needInfoCls():
             an_item = dict(bug_id=bug.bug_id,summary=bug.summary, status=bug.status,
                    component=bug.component,severity=bug.severity,
                    requestee_name=requestee_name,version=bug.version,
-                   target_release=target,age=age
+                   target_release=target,age=age,product=bug.product
                    )
             items.append(an_item)
             

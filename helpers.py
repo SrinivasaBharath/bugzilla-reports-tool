@@ -204,7 +204,7 @@ def get_action_item_rbd_rbd_mirror_bugs():
     return bzapi.query(query)
 
 def get_action_item_openstack_dp_bugs():
-    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&classification=Red%20Hat&columnlist=component%2Cbug_status%2Cshort_desc%2Ccf_qa_whiteboard%2Cproduct%2Cdependent_products&f2=dependent_products&list_id=12638829&o2=substring&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v2=OpenStack")
+    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&classification=Red%20Hat&columnlist=component%2Cbug_status%2Cshort_desc%2Ccf_qa_whiteboard%2Cproduct%2Cdependent_products&f2=dependent_products&f3=cf_qa_whiteboard&list_id=12896566&o2=substring&o3=notsubstring&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v2=OpenStack&v3=qa_verification")
     query["include_fields"]= [
             "id",
             "component",
@@ -528,7 +528,8 @@ def get_needinfos_bugs():
             "target_milestone",
             "version",
             "target_release",
-            "last_change_time"
+            "last_change_time",
+            "product"
         ],
         "o1" : "anywordssubstr",
         "o2" : "substring",

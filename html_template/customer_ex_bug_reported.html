@@ -1,0 +1,73 @@
+-<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+    table.full-table{
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #050505;
+        text-align: left;
+        padding: 8px;
+    }
+    
+    p { margin:0 }
+
+    table, th, td {
+       border: 1px solid white;
+       border-collapse: collapse;
+       }
+    
+    </style>
+</head>
+	
+<body>
+
+<table class="full-table">
+    <caption><b>Customer Experience : Bugs Reported</b></caption>
+	<tr>
+            <th style="color: #000308">#Bug ID</th>
+            <th style="color: #000308">Summary</th>
+            <th style="color: #000308">Reporter</th>
+            <th style="color: #000308">Status</th>
+            <th style="color: #000308">Component</th>
+		    <th style="color: #000308">Severity</th>
+		    <th style="color: #000308">Is Blocker?</th>
+		    <th style="color: #000308">Version</th>
+		    <th style="color: #000308">Target Release</th>
+        </tr>
+	
+	   {% for item in items %}
+        <TR>
+        
+           <TD><a href="https://bugzilla.redhat.com/show_bug.cgi?id={{item.bug_id}}">{{item.bug_id}}</a></TD>
+           <TD>{{item.summary}}</TD>
+           <TD>{{item.reporter}}</TD>
+           <TD>{{item.status}}</TD>
+           <TD>{{item.component}}</TD>
+           <TD>{{item.severity}}</TD>
+           
+           {% if item.is_Blocker == "+" %}
+              <TD style ="background-color: #00FF7F">{{item.is_Blocker}}</TD>
+           {% elif item.is_Blocker == "?"  %}
+              <TD style ="background-color: #deea94">{{item.is_Blocker}}</TD>
+           {% elif item.is_Blocker == "-"  %}
+              <TD style ="background-color: #ff7f8a">{{item.is_Blocker}}</TD>      
+           {% else %}
+              <TD >{{item.is_Blocker}}</TD>
+           {% endif %}    
+        
+        
+           <TD>{{item.version}}</TD>
+           <TD>{{item.target_release}}</TD>
+                 
+        </TR>
+        {% endfor %}	
+</table>
+<br>
+<br>

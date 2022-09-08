@@ -1542,3 +1542,256 @@ def get_unspec_sev_bugs():
     }
     bugs = bzapi.query(query)
     return bugs
+
+def get_customer_bug_reported(changed_from, changed_to):
+    query_link = "https://bugzilla.redhat.com/buglist.cgi?bug_status=__open__&chfield=%5BBug%20creation%5D&chfieldfrom="+changed_from+"&chfieldto="+changed_to+"&classification=Red%20Hat&f1=external_bugzilla.description&f6=OP&list_id=12750536&o1=equals&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v1=Red%20Hat%20Customer%20Portal"
+    query = bzapi.url_to_query(query_link)
+    query["include_fields"]= [
+            "id",
+            "component",
+            "keywords",
+            "creator",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time",
+            "cf_cust_facing",
+        ]
+    bugs = bzapi.query(query)
+    return bugs,query_link
+
+def get_hotfix_count(changed_from, changed_to):
+    query_link = "https://bugzilla.redhat.com/buglist.cgi?chfield=%5BBug%20creation%5D&chfieldfrom="+changed_from+"&chfieldto="+changed_to+"&classification=Red%20Hat&f1=flagtypes.name&f3=external_bugzilla.description&list_id=12751692&o1=regexp&o3=equals&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v1=hot_fix_requested%5C%3F%7Chot_fix_requested%5C%2B&v3=Red%20Hat%20Customer%20Portal"
+    query = bzapi.url_to_query(query_link)
+    query["include_fields"]= [
+            "id",
+            "component",
+            "keywords",
+            "creator",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time",
+            "cf_cust_facing",
+        ]
+    bugs = bzapi.query(query)
+    return bugs,query_link
+
+def get_customer_ex_escalation(changed_from, changed_to):
+    query_link = "https://bugzilla.redhat.com/buglist.cgi?chfield=%5BBug%20creation%5D&chfieldfrom="+changed_from+"&chfieldto="+changed_to+"&classification=Red%20Hat&f1=cf_cust_facing&f3=external_bugzilla.description&list_id=12769198&o1=regexp&o3=equals&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v1=yes%7CYes&v3=Red%20Hat%20Customer%20Portal"
+    query = bzapi.url_to_query(query_link)
+    query["include_fields"]= [
+            "id",
+            "component",
+            "keywords",
+            "creator",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time",
+            "cf_cust_facing",
+        ]
+    bugs = bzapi.query(query)
+    return bugs,query_link
+
+def get_customer_ex_rfe_bug(changed_from, changed_to):
+    query_link = "https://bugzilla.redhat.com/buglist.cgi?bug_status=__open__&chfield=%5BBug%20creation%5D&chfieldfrom="+changed_from+"&chfieldto="+changed_to+"&classification=Red%20Hat&f1=external_bugzilla.description&f2=short_desc&list_id=12751738&o1=substring&o2=substring&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v1=Red%20Hat%20Customer%20Portal&v2=%5BRFE%5D"
+    query = bzapi.url_to_query(query_link)
+    query["include_fields"]= [
+            "id",
+            "component",
+            "keywords",
+            "creator",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time",
+            "cf_cust_facing",
+        ]
+    bugs = bzapi.query(query)
+    return bugs,query_link
+
+def get_customer_ex_needinfo_req(changed_from, changed_to):
+    query_link = "https://bugzilla.redhat.com/buglist.cgi?bug_status=__open__&chfield=%5BBug%20creation%5D&chfieldfrom="+changed_from+"&chfieldto="+changed_to+"&classification=Red%20Hat&f1=external_bugzilla.description&f2=requestees.login_name&f3=flagtypes.name&list_id=12751768&o1=substring&o2=anywordssubstr&o3=equals&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v1=Red%20Hat%20Customer%20Portal&v2=vereddy%20ngangadh%20adrajiv%20skanta%20pdhiran%20mkasturi%20anssingh%20racpatel%20hyelloji%20hmaheswa%20hchebrol%20amk%20shucjain%20tchandra%20julpark%20tmathew%20mmurthy%20ymane%20vimishra%20psathyan%20gsitlani%20gpatta%20amsyedha%20sunnagar%20rlepaksh%20ckulal%20vashastr%20mgowri%20pnataraj%20vivk%20radesai%20anrao%20sangadi%20ukurundw%20msaini%20saraut%20mobisht&v3=needinfo%3F"
+    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?bug_status=__open__&chfield=%5BBug%20creation%5D&chfieldfrom="+changed_from+"&chfieldto="+changed_to+"&classification=Red%20Hat&f1=external_bugzilla.description&f2=requestees.login_name&f3=flagtypes.name&list_id=12751768&o1=substring&o2=anywordssubstr&o3=equals&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v1=Red%20Hat%20Customer%20Portal&v2=vereddy%20ngangadh%20adrajiv%20skanta%20pdhiran%20mkasturi%20anssingh%20racpatel%20hyelloji%20hmaheswa%20hchebrol%20amk%20shucjain%20tchandra%20julpark%20tmathew%20mmurthy%20ymane%20vimishra%20psathyan%20gsitlani%20gpatta%20amsyedha%20sunnagar%20rlepaksh%20ckulal%20vashastr%20mgowri%20pnataraj%20vivk%20radesai%20anrao%20sangadi%20ukurundw%20msaini%20saraut%20mobisht&v3=needinfo%3F")
+    query["include_fields"]= [
+            "id",
+            "component",
+            "keywords",
+            "creator",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time",
+            "cf_cust_facing",
+        ]
+    bugs = bzapi.query(query)
+    return bugs,query_link
+
+def get_customer_ex_qe_test_flag_plus(changed_from, changed_to):
+    query_link = "https://bugzilla.redhat.com/buglist.cgi?action=wrap&chfieldfrom="+changed_from+"&chfieldto="+changed_to+"&classification=Red%20Hat&f1=external_bugzilla.description&f2=flagtypes.name&list_id=12751794&o1=substring&o2=substring&product=Red%20Hat%20Ceph%20Storage&v1=Red%20Hat%20Customer%20Portal&v2=qe_test_coverage%2B"
+    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?action=wrap&chfieldfrom="+changed_from+"&chfieldto="+changed_to+"&classification=Red%20Hat&f1=external_bugzilla.description&f2=flagtypes.name&list_id=12751794&o1=substring&o2=substring&product=Red%20Hat%20Ceph%20Storage&v1=Red%20Hat%20Customer%20Portal&v2=qe_test_coverage%2B")
+    query["include_fields"]= [
+            "id",
+            "component",
+            "keywords",
+            "creator",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time",
+            "cf_cust_facing",
+        ]
+    bugs = bzapi.query(query)
+    return bugs,query_link
+
+def get_customer_ex_qe_test_flag_minus(changed_from, changed_to):
+    query_link = "https://bugzilla.redhat.com/buglist.cgi?chfieldfrom="+changed_from+"&chfieldto="+changed_to+"&classification=Red%20Hat&f1=external_bugzilla.description&f2=flagtypes.name&f3=OP&f5=CP&list_id=12768547&o1=substring&o2=substring&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v1=Red%20Hat%20Customer%20Portal&v2=qe_test_coverage-"
+    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?chfieldfrom="+changed_from+"&chfieldto="+changed_to+"&classification=Red%20Hat&f1=external_bugzilla.description&f2=flagtypes.name&f3=OP&f5=CP&list_id=12768547&o1=substring&o2=substring&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&v1=Red%20Hat%20Customer%20Portal&v2=qe_test_coverage-")
+    query["include_fields"]= [
+            "id",
+            "component",
+            "keywords",
+            "creator",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time",
+            "cf_cust_facing",
+        ]
+    bugs = bzapi.query(query)
+    return bugs,query_link
+
+def get_customer_ex_document_bugs_count(changed_from, changed_to):
+    query_link = "https://bugzilla.redhat.com/buglist.cgi?action=wrap&bug_status=__open__&chfield=%5BBug%20creation%5D&chfieldfrom="+changed_from+"&chfieldto="+changed_to+"&classification=Red%20Hat&component=Documentation&f1=external_bugzilla.description&list_id=12751799&o1=substring&product=Red%20Hat%20Ceph%20Storage&v1=Red%20Hat%20Customer%20Portal"
+    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?action=wrap&bug_status=__open__&chfield=%5BBug%20creation%5D&chfieldfrom="+changed_from+"&chfieldto="+changed_to+"&classification=Red%20Hat&component=Documentation&f1=external_bugzilla.description&list_id=12751799&o1=substring&product=Red%20Hat%20Ceph%20Storage&v1=Red%20Hat%20Customer%20Portal")
+    query["include_fields"]= [
+            "id",
+            "component",
+            "keywords",
+            "creator",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time",
+            "cf_cust_facing",
+        ]
+    bugs = bzapi.query(query)
+    return bugs,query_link
+
+
+def missing_polarion():
+    query_link = "https://bugzilla.redhat.com/buglist.cgi?bug_severity=urgent&bug_severity=high&chfield=%5BBug%20creation%5D&chfieldto=Now&classification=Red%20Hat&f1=external_bugzilla.description&f2=flagtypes.name&f4=OP&f5=external_bugzilla.description&list_id=12769294&n5=1&o1=substring&o2=substring&o5=substring&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&target_release=6.0&target_release=6.1&target_release=4.0&target_release=4.1&target_release=4.1z3&target_release=4.2&target_release=4.3&target_release=4.3z1&target_release=5.0&target_release=5.1&target_release=5.2&target_release=5.3&v1=Red%20Hat%20Customer%20Portal&v2=qe_test_coverage%2B&v5=Polarion"
+    query = bzapi.url_to_query("https://bugzilla.redhat.com/buglist.cgi?bug_severity=urgent&bug_severity=high&chfield=%5BBug%20creation%5D&chfieldto=Now&classification=Red%20Hat&f1=external_bugzilla.description&f2=flagtypes.name&f4=OP&f5=external_bugzilla.description&list_id=12769294&n5=1&o1=substring&o2=substring&o5=substring&product=Red%20Hat%20Ceph%20Storage&query_format=advanced&target_release=6.0&target_release=6.1&target_release=4.0&target_release=4.1&target_release=4.1z3&target_release=4.2&target_release=4.3&target_release=4.3z1&target_release=5.0&target_release=5.1&target_release=5.2&target_release=5.3&v1=Red%20Hat%20Customer%20Portal&v2=qe_test_coverage%2B&v5=Polarion")
+    query["include_fields"]= [
+            "id",
+            "component",
+            "keywords",
+            "creator",
+            "flags",
+            "summary",
+            "flags_all",
+            "qa_contact",
+            "qa_contact_realname",
+            "short_desc",
+            "short_short_desc",
+            "status",
+            "whiteboard",
+            "changeddate",
+            "severity",
+            "target_milestone",
+            "version",
+            "target_release",
+            "last_change_time",
+            "cf_cust_facing",
+        ]
+    bugs = bzapi.query(query)
+    return bugs,query_link

@@ -39,4 +39,10 @@ def get_modified_date(bug):
             for bug_change_status in bug_changes:
                 if(bug_change_status["added"] == "ON_QA"):
                     OnQa_Date=list_change["when"]
-        return OnQa_Date         
+        return OnQa_Date
+
+def  get_hotfix_status(flag_list):
+    for flag in flag_list:
+        if flag['name']=='automate_bug':
+            return flag['status']
+    return " "     
